@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №4</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Лабораторная работа №4</h1>
+    <p class="subtitle">HTML + JavaScript: формы и валидация</p>
+
+    <section>
+        <h2>1. Базовый уровень — регистрация студента</h2>
+        <form id="studentForm" novalidate>
+            <label for="studentName">ФИО</label>
+            <input id="studentName" type="text" placeholder="Иванов Иван Иванович">
+            <small id="studentNameError" class="error"></small>
+
+            <label for="studentEmail">E-mail</label>
+            <input id="studentEmail" type="email" placeholder="example@mail.com">
+            <small id="studentEmailError" class="error"></small>
+
+            <label for="studentCourse">Курс</label>
+            <select id="studentCourse">
+                <option value="">Выберите курс</option>
+                <option value="1">1 курс</option>
+                <option value="2">2 курс</option>
+                <option value="3">3 курс</option>
+                <option value="4">4 курс</option>
+            </select>
+            <small id="studentCourseError" class="error"></small>
+
+            <label class="checkbox">
+                <input id="studentAgree" type="checkbox">
+                Согласен с правилами
+            </label>
+            <small id="studentAgreeError" class="error"></small>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        <p id="studentMessage" class="success"></p>
+    </section>
+
+    <section>
+        <h2>2. Средний уровень — регистрация аккаунта</h2>
+        <form id="accountForm" novalidate>
+            <label for="login">Логин</label>
+            <input id="login" type="text" placeholder="student123">
+            <small id="loginError" class="error"></small>
+
+            <label for="accountEmail">E-mail</label>
+            <input id="accountEmail" type="email" placeholder="example@mail.com">
+            <small id="accountEmailError" class="error"></small>
+
+            <label for="password">Пароль</label>
+            <input id="password" type="password" placeholder="Минимум 8 символов">
+            <small id="passwordError" class="error"></small>
+
+            <label for="passwordRepeat">Повтор пароля</label>
+            <input id="passwordRepeat" type="password" placeholder="Повторите пароль">
+            <small id="passwordRepeatError" class="error"></small>
+
+            <button type="submit">Создать аккаунт</button>
+        </form>
+        <p id="accountMessage" class="success"></p>
+    </section>
+
+    <section>
+        <h2>3. Повышенный уровень — интернет-магазин</h2>
+        <form id="shopForm" novalidate>
+            <h3>Контактные данные</h3>
+
+            <label for="shopName">ФИО</label>
+            <input id="shopName" type="text" placeholder="Иванов Иван Иванович">
+            <small id="shopNameError" class="error"></small>
+
+            <label for="shopEmail">E-mail</label>
+            <input id="shopEmail" type="email" placeholder="example@mail.com">
+            <small id="shopEmailError" class="error"></small>
+
+            <label for="shopPhone">Телефон</label>
+            <input id="shopPhone" type="text" placeholder="+7 777 123 45 67">
+            <small id="shopPhoneError" class="error"></small>
+
+            <h3>Доставка</h3>
+
+            <label for="address">Адрес доставки</label>
+            <input id="address" type="text" placeholder="Алматы, ул. Абая, 10">
+            <small id="addressError" class="error"></small>
+
+            <label for="product">Товар</label>
+            <select id="product">
+                <option value="">Выберите товар</option>
+                <option value="Ноутбук">Ноутбук</option>
+                <option value="Клавиатура">Клавиатура</option>
+                <option value="Мышь">Мышь</option>
+                <option value="Наушники">Наушники</option>
+            </select>
+            <small id="productError" class="error"></small>
+
+            <label for="quantity">Количество</label>
+            <input id="quantity" type="number" min="1" placeholder="1">
+            <small id="quantityError" class="error"></small>
+
+            <p>Способ доставки:</p>
+            <label class="radio">
+                <input type="radio" name="delivery" value="Курьер">
+                Курьер
+            </label>
+            <label class="radio">
+                <input type="radio" name="delivery" value="Самовывоз">
+                Самовывоз
+            </label>
+            <small id="deliveryError" class="error"></small>
+
+            <h3>Оплата</h3>
+
+            <label class="radio">
+                <input type="radio" name="payment" value="Банковская карта">
+                Банковская карта
+            </label>
+            <label class="radio">
+                <input type="radio" name="payment" value="Наличными">
+                Наличными
+            </label>
+            <small id="paymentError" class="error"></small>
+
+            <h3>Согласия</h3>
+            <label class="checkbox">
+                <input id="shopAgree" type="checkbox">
+                Согласен с правилами обработки заказа
+            </label>
+            <small id="shopAgreeError" class="error"></small>
+
+            <button type="submit">Оформить заказ</button>
+        </form>
+        <p id="shopMessage" class="success"></p>
+    </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
