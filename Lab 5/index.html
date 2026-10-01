@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №5 - JavaScript DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        section {
+            background: #fff;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 { font-size: 1.2em; color: #2c3e50; }
+        button {
+            padding: 6px 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+        }
+        button:hover { background-color: #2980b9; }
+        .danger-btn { background-color: #e74c3c; }
+        .danger-btn:hover { background-color: #c0392b; }
+        input[type="text"] {
+            padding: 6px;
+            width: 65%;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        ul { padding-left: 20px; }
+        .completed { text-decoration: line-through; color: #888; }
+        .task-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+
+    <h1>Лабораторная работа №5: JavaScript DOM</h1>
+
+
+    
+
+    
+    <section>
+        <h2>1. Базовый уровень: Счетчик</h2>
+        <p>Текущее значение: <span id="counter-value" style="font-weight: bold; font-size: 1.2em;">0</span></p>
+        <button id="btn-decrease">-</button>
+        <button id="btn-reset" class="danger-btn">Сброс</button>
+        <button id="btn-increase">+</button>
+    </section>
+
+    
+
+
+    <section>
+        <h2>2. Средний уровень: Список покупок</h2>
+        <div>
+            <input type="text" id="purchase-input" placeholder="Введите товар...">
+            <button id="btn-add-purchase">Добавить</button>
+            <button id="btn-clear-purchase" class="danger-btn">Очистить всё</button>
+        </div>
+        <ul id="purchase-list"></ul>
+    </section>
+
+    
+    
+
+
+    <section>
+        <h2>3. Повышенный уровень: Динамический список задач (Todo)</h2>
+        <div>
+            <input type="text" id="task-input" placeholder="Новая задача...">
+            <button id="btn-add-task">Добавить задачу</button>
+        </div>
+        <p>
+            Выполнено: <span id="completed-count">0</span> | 
+            Невыполнено: <span id="uncompleted-count">0</span>
+        </p>
+        <ul id="task-list" style="list-style-type: none; padding: 0;"></ul>
+    </section>
+
+    <!-- Весь JavaScript код внутри одного файла -->
+    <script>
+
+
+
+
+
+        const counterValueSpan = document.querySelector("#counter-value");
+        const btnDecrease = document.querySelector("#btn-decrease");
+        const btnReset = document.querySelector("#btn-reset");
+        const btnIncrease = document.querySelector("#btn-increase");
+
+        let count = localStorage.getItem("counterCount") ? parseInt(localStorage.getItem("counterCount")) : 0;
+        updateCounterDOM();
+
+        function updateCounterDOM() {
+            counterValueSpan.textContent = count;
+            localStorage.setItem("counterCount", count);
+        }
+
+        btnIncrease.addEventListener("click", () => {
+            count++;
+            updateCounterDOM();
+        });
+
+        btnDecrease.addEventListener("click", () => {
+            count--;
+            updateCounterDOM();
+        });
+
+        btnReset.addEventListener("click", () => {
+            count = 0;
+            updateCounterDOM();
+        });
+
+
+
+
+
+
+        const purchaseInput = document.querySelector("#purchase-input");
+        const btnAddPurchase = document.querySelector("#btn-add-purchase");
+        const btnClearPurchase = document.querySelector("#btn-clear-purchase");
+        const purchaseList = document.querySelector("#purchase-list");
+
+        let purchases = JSON.parse(localStorage.getItem("purchasesList")) || [];
+        renderPurchases();
+
+        function renderPurchases() {
+            purchaseList.innerHTML = "";
+            purchases.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.textContent = `${index + 1}. ${item}`;
+                purchaseList.appendChild(li);
+            });
+            localStorage.setItem("purchasesList", JSON.stringify(purchases));
+        }
+
+        btnAddPurchase.addEventListener("click", () => {
+            const text = purchaseInput.value.trim();
+            if (text !== "") {
+                purchases.push(text);
+                purchaseInput.value = "";
+                renderPurchases();
+            } else {
+                alert("Поле ввода не должно быть пустым!");
+            }
+        });
+
+        btnClearPurchase.addEventListener("click", () => {
+            purchases = [];
+            renderPurchases();
+        });
+
+
+
+        
+
+
+
+        const taskInput = document.querySelector("#task-input");
+        const btnAddTask = document.querySelector("#btn-add-task");
+        const taskList = document.querySelector("#task-list");
+        const completedCountSpan = document.querySelector("#completed-count");
+        const uncompletedCountSpan = document.querySelector("#uncompleted-count");
+
+        let tasks = JSON.parse(localStorage.getItem("todoTasks")) || [];
+        renderTasks();
+
+        function renderTasks() {
+            taskList.innerHTML = "";
+            let completedCount = 0;
+            let uncompletedCount = 0;
+
+            tasks.forEach((task, index) => {
+                if (task.completed) {
+                    completedCount++;
+                } else {
+                    uncompletedCount++;
+                }
+
+                const li = document.createElement("li");
+                li.className = "task-item";
+
+                const span = document.createElement("span");
+                span.textContent = task.text;
+                if (task.completed) {
+                    span.classList.add("completed");
+                }
+
+                const btnContainer = document.createElement("div");
+
+                const btnToggle = document.createElement("button");
+                btnToggle.textContent = task.completed ? "Отменить" : "Готово";
+                btnToggle.style.backgroundColor = task.completed ? "#f39c12" : "#2ecc71";
+                btnToggle.addEventListener("click", () => {
+                    tasks[index].completed = !tasks[index].completed;
+                    renderTasks();
+                });
+
+                const btnDelete = document.createElement("button");
+                btnDelete.textContent = "Удалить";
+                btnDelete.className = "danger-btn";
+                btnDelete.addEventListener("click", () => {
+                    tasks.splice(index, 1);
+                    renderTasks();
+                });
+
+                btnContainer.appendChild(btnToggle);
+                btnContainer.appendChild(btnDelete);
+
+                li.appendChild(span);
+                li.appendChild(btnContainer);
+                taskList.appendChild(li);
+            });
+
+            completedCountSpan.textContent = completedCount;
+            uncompletedCountSpan.textContent = uncompletedCount;
+
+            localStorage.setItem("todoTasks", JSON.stringify(tasks));
+        }
+
+        btnAddTask.addEventListener("click", () => {
+            const text = taskInput.value.trim();
+            if (text !== "") {
+                tasks.push({ text: text, completed: false });
+                taskInput.value = "";
+                renderTasks();
+            } else {
+                alert("Введите текст задачи!");
+            }
+        });
+    </script>
+</body>
+</html>
