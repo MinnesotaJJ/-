@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban-доска</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Kanban-доска</h1>
+
+    <div class="add-form">
+      <input id="cardInput" type="text" placeholder="Название новой карточки">
+      <button id="addCardBtn">Добавить карточку</button>
+    </div>
+
+    <section class="board">
+      <div class="column" data-status="new">
+        <h2>Новые <span class="count">0</span></h2>
+        <div class="cards" id="newCards"></div>
+      </div>
+
+      <div class="column" data-status="work">
+        <h2>В работе <span class="count">0</span></h2>
+        <div class="cards" id="workCards"></div>
+      </div>
+
+      <div class="column" data-status="done">
+        <h2>Готово <span class="count">0</span></h2>
+        <div class="cards" id="doneCards"></div>
+      </div>
+    </section>
+
+    <p id="message"></p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

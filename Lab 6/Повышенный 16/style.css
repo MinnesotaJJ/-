@@ -1,0 +1,78 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.container {
+  max-width: 1200px;
+  margin: 35px auto;
+  padding: 20px;
+}
+h1 { text-align: center; }
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+}
+button {
+  border: 0;
+  border-radius: 7px;
+  padding: 9px 12px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.column {
+  min-height: 430px;
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+.column h2 {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+}
+.count {
+  font-size: 14px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: #cbd5e1;
+}
+.cards { min-height: 350px; }
+.card {
+  margin: 9px 0;
+  padding: 12px;
+  background: white;
+  border-radius: 9px;
+  box-shadow: 0 2px 7px rgba(0,0,0,.08);
+}
+.card-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.card-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.move { background: #475569; }
+.delete { background: #dc2626; }
+#message { min-height: 20px; color: #475569; }
+
+@media (max-width: 800px) {
+  .board { grid-template-columns: 1fr; }
+}
